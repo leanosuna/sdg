@@ -428,7 +428,11 @@ def build_docx(blocks, out_path: Path):
         elif btype == "table":
             num_rows = len(data)
             num_cols = max(len(r) for r in data)
-            if num_cols == 6:
+            if num_cols == 2:
+                col_widths_dxa = [2430, 6930]
+            elif num_cols == 5:
+                col_widths_dxa = [2060, 2250, 1220, 1220, 2610]
+            elif num_cols == 6:
                 col_widths_dxa = [2810, 1310, 1310, 1310, 1310, 1310]
             else:
                 col_widths_dxa = [9360 // num_cols] * num_cols
@@ -658,7 +662,17 @@ def build_pdf(blocks, out_path: Path):
 
         elif btype == "table":
             num_cols = max(len(r) for r in data)
-            if num_cols == 6:
+            if num_cols == 2:
+                col_widths_pt = [usable_width * 0.26, usable_width * 0.74]
+            elif num_cols == 5:
+                col_widths_pt = [
+                    usable_width * 0.22,
+                    usable_width * 0.24,
+                    usable_width * 0.13,
+                    usable_width * 0.13,
+                    usable_width * 0.28,
+                ]
+            elif num_cols == 6:
                 col_widths_pt = [usable_width * 0.30] + [usable_width * 0.14] * 5
             else:
                 col_widths_pt = [usable_width / num_cols] * num_cols

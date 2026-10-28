@@ -12,6 +12,7 @@ Toda edición sobre el documento o archivos del repositorio debe cumplir estas r
 - No uses dos puntos en mitad de una oración. Úsalos solo antes de una lista o tabla.
 - Escribe los encabezados con mayúscula solo en la primera palabra y en los nombres propios.
 - Evita abusar de las negritas dentro de los párrafos.
+- No agregues números de versión, notas de revisión ni aclaraciones sobre modificaciones, correcciones o devoluciones docentes dentro del texto del documento. Redacta el trabajo como un estudio de inversión autónomo y definitivo.
 
 ## Fuente de verdad y flujo de entrega
 
