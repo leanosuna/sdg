@@ -428,7 +428,10 @@ def build_docx(blocks, out_path: Path):
         elif btype == "table":
             num_rows = len(data)
             num_cols = max(len(r) for r in data)
-            col_w = 9360 // num_cols
+            if num_cols == 6:
+                col_widths_dxa = [2810, 1310, 1310, 1310, 1310, 1310]
+            else:
+                col_widths_dxa = [9360 // num_cols] * num_cols
 
             tbl = doc.add_table(rows=num_rows, cols=num_cols)
             tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -453,7 +456,7 @@ def build_docx(blocks, out_path: Path):
                 for c_idx in range(num_cols):
                     cell = row_cells[c_idx]
                     val = row_data[c_idx] if c_idx < len(row_data) else ""
-                    set_cell_width_dxa(cell, col_w)
+                    set_cell_width_dxa(cell, col_widths_dxa[c_idx])
                     cp = cell.paragraphs[0]
                     if r_idx == 0:
                         set_cell_shading(cell, "003366")
@@ -655,7 +658,10 @@ def build_pdf(blocks, out_path: Path):
 
         elif btype == "table":
             num_cols = max(len(r) for r in data)
-            col_w = usable_width / num_cols
+            if num_cols == 6:
+                col_widths_pt = [usable_width * 0.30] + [usable_width * 0.14] * 5
+            else:
+                col_widths_pt = [usable_width / num_cols] * num_cols
             rl_rows = []
             for r_idx, row_data in enumerate(data):
                 row_cells = []
@@ -665,7 +671,7 @@ def build_pdf(blocks, out_path: Path):
                     row_cells.append(Paragraph(inline_md_to_rl_xml(val), style))
                 rl_rows.append(row_cells)
 
-            t = Table(rl_rows, colWidths=[col_w] * num_cols, repeatRows=1)
+            t = Table(rl_rows, colWidths=col_widths_pt, repeatRows=1)
             t_style = [
                 ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#003366")),
                 ("TOPPADDING", (0, 0), (-1, 0), 6),
